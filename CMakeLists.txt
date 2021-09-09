@@ -2,9 +2,11 @@ cmake_minimum_required(VERSION 3.20.0)
 
 project(PDPluginInterface VERSION 1.0)
 
-find_package(Qt6 6.2 COMPONENTS Core REQUIRED)
+find_package(Qt6 6.2 COMPONENTS Core Gui Quick REQUIRED)
 
 set(INTERFACE_HEADERS
+    ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginInterface.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/PDBaseTypes.hpp
 )
 
 set(FEATURE_HEADERS
@@ -14,7 +16,7 @@ add_library(${PROJECT_NAME} INTERFACE ${INTERFACE_HEADERS} ${FEATURE_HEADERS})
 add_library(PD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC OFF AUTOUIC OFF AUTORCC OFF VERSION ${PROJECT_VERSION} SOVERSION 0)
-target_link_libraries(${PROJECT_NAME} INTERFACE Qt::Core)
+target_link_libraries(${PROJECT_NAME} INTERFACE Qt::Core Qt::Gui Qt::Quick)
 
 include(GNUInstallDirs)
 set(INSTALLATION_PACKAGE_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME})
