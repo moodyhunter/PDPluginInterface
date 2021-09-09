@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt6 COMPONENTS Core)
+
+set(PDPluginInterface_VERSION @PROJECT_VERSION_MAJOR@)
+set(PDPluginInterface_UseAsLib ON)
+include(${CMAKE_CURRENT_LIST_DIR}/PDPluginInterfaceTargets.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/PDPluginInterfaceMacros.cmake)
+
