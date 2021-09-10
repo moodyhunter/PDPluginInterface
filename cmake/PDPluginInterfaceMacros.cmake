@@ -9,11 +9,11 @@ if(NOT TARGET _PD_AllPlugins)
     message(STATUS "Added PD Plugins Meta Target")
 endif()
 
-function(PD_add_plugin TARGET_NAME)
+function(pd_add_plugin TARGET_NAME)
     set(Stable_PluginInterface_VERSION 1)
     set(options NO_INSTALL STATIC DEV_INTERFACE DEBUGGING_EXECUTABLE)
     set(oneValueArgs INSTALL_PREFIX_LINUX INSTALL_PREFIX_WINDOWS INSTALL_PREFIX_MACOS CLASS_NAME INTERFACE_VERSION)
-    set(multiValueArgs EXTRA_DEPENDENCY_DIRS_WINDOWS)
+    set(multiValueArgs EXTRA_DEPENDENCY_DIRS_WINDOWS SOURCES QML_FILES)
     cmake_parse_arguments(PDPLUGIN "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     if(DEFINED PDPLUGIN_KEYWORDS_MISSING_VALUES)
