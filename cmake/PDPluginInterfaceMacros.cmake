@@ -98,6 +98,19 @@ function(pd_add_plugin TARGET_NAME)
     set_target_properties(${TARGET_NAME} PROPERTIES AUTOMOC ON)
     set_property(TARGET ${TARGET_NAME} APPEND PROPERTY AUTOMOC_MACRO_NAMES "PD_PLUGIN")
     target_compile_definitions(${TARGET_NAME} PRIVATE -DPLUGIN_INTERFACE_VERSION=${PDPLUGIN_INTERFACE_VERSION})
+    target_compile_definitions(${TARGET_NAME} PRIVATE -DPDPLUGIN_QML_URI="PDPlugins.${TARGET_NAME}")
+    target_compile_definitions(${TARGET_NAME} PRIVATE -DPDPLUGIN_QML_IMPORT_PATH="u\\"/PDPlugins/${TARGET_NAME}/\\"_qs")
+
+    qt_add_qml_module(${TARGET_NAME}
+        URI "PDPlugins.${TARGET_NAME}"
+        VERSION ${PDPLUGIN_INTERFACE_VERSION}.0
+        RESOURCE_PREFIX "/"
+        NO_PLUGIN
+        QML_FILES
+            ${PDPLUGIN_QML_FILES}
+        SOURCES
+            ${PDPLUGIN_SOURCES}
+    )
 
     if(CMAKE_CXX_COMPILER_ID EQUAL Clang OR CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
         if(UNIX AND NOT APPLE)
