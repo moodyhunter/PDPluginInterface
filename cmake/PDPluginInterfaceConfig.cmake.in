@@ -1,7 +1,7 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(Qt6 COMPONENTS Core)
+find_dependency(Qt6 COMPONENTS Core Gui Quick)
 
 set(PDPluginInterface_VERSION @PROJECT_VERSION_MAJOR@)
 set(PDPluginInterface_UseAsLib ON)

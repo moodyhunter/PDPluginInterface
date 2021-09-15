@@ -3,6 +3,13 @@
 #include <QDebug>
 #include <QString>
 
+// clang-format off
+#define DeclareSafeID(type)                                                                                                                                              \
+namespace PD::Plugin::Types::_safetypes{ class __##type; }                                                                                                           \
+    typedef PD::Plugin::Types::PDIdT<PD::Plugin::Types::_safetypes::__##type> type;                                                                                      \
+    Q_DECLARE_METATYPE(type)
+// clang-format on
+
 namespace PD::Plugin::Types
 {
     // clang-format off
@@ -35,13 +42,16 @@ namespace PD::Plugin::Types
         debug.nospace() << QMetaType::fromType<decltype(c)>().name() << '[' << c.toString() << ']';
         return debug;
     }
+
+    struct PDPluginQmlTypeInfo
+    {
+        QString Description;
+        QString QmlFilePath;
+        QString IconPath;
+    };
+
 } // namespace PD::Plugin::Types
 
-// clang-format off
-#define DeclareSafeID(type)                                                                                                                                              \
-    namespace PD::Plugin::Types::_safetypes{ class __##type; }                                                                                                           \
-    typedef PD::Plugin::Types::PDIdT<PD::Plugin::Types::_safetypes::__##type> type;                                                                                      \
-    Q_DECLARE_METATYPE(type)
-// clang-format on
-
 DeclareSafeID(PDPluginId);
+
+Q_DECLARE_METATYPE(PD::Plugin::Types::PDPluginQmlTypeInfo)
