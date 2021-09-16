@@ -69,7 +69,7 @@ install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
 
 export(EXPORT ${PROJECT_NAME}Targets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
-    NAMESPACE Qv2ray::
+    NAMESPACE PD::
 )
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}Macros.cmake)
