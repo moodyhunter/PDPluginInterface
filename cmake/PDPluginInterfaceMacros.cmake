@@ -97,9 +97,11 @@ function(pd_add_plugin TARGET_NAME)
     target_link_libraries(${TARGET_NAME} PRIVATE Qt::Core Qt::Gui Qt::Quick PD::PDPluginInterface)
     set_target_properties(${TARGET_NAME} PROPERTIES AUTOMOC ON)
     set_property(TARGET ${TARGET_NAME} APPEND PROPERTY AUTOMOC_MACRO_NAMES "PD_PLUGIN")
-    target_compile_definitions(${TARGET_NAME} PRIVATE -DPLUGIN_INTERFACE_VERSION=${PDPLUGIN_INTERFACE_VERSION})
-    target_compile_definitions(${TARGET_NAME} PRIVATE -DPDPLUGIN_QML_URI="PDPlugins.${TARGET_NAME}")
-    target_compile_definitions(${TARGET_NAME} PRIVATE -DPDPLUGIN_QML_IMPORT_PATH="/PDPlugins/${TARGET_NAME}/")
+
+    target_compile_definitions(${TARGET_NAME} PRIVATE
+        -DPLUGIN_INTERFACE_VERSION="${PDPLUGIN_INTERFACE_VERSION}"
+        -DPDPLUGIN_QML_URI="PDPlugins.${TARGET_NAME}"
+        -DPDPLUGIN_QML_IMPORT_PATH="/PDPlugins/${TARGET_NAME}/")
 
     qt_add_qml_module(${TARGET_NAME}
         URI "PDPlugins.${TARGET_NAME}"
