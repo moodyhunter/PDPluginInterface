@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         target_link_libraries(${TARGET_NAME}_exec PRIVATE ${TARGET_NAME})
     endif()
 
-    if(APPLE)
+    if(APPLE AND NOT PDPLUGIN_STATIC)
         add_custom_command(TARGET ${TARGET_NAME}
             POST_BUILD
             COMMAND
