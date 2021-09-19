@@ -25,12 +25,7 @@ struct QObjectPropertyMapConverter
 
     static T *Create(const QVariantMap &map)
     {
-        return Create(map, nullptr);
-    }
-
-    static T *Create(const QVariantMap &map, QObject *parent)
-    {
-        auto self = new T{ parent };
+        auto self = new T;
         for (qsizetype i = 1; i < ((QObject *) self)->metaObject()->propertyCount(); i++)
         {
             const auto p = ((QObject *) self)->metaObject()->property(i);
