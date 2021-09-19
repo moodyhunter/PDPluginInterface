@@ -8,6 +8,7 @@ set(INTERFACE_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginInterface.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/PDBaseTypes.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/QObjectPropertyHelpers.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/QObjectPropertyMap.hpp
 )
 
 set(FEATURE_HEADERS
