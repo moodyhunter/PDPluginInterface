@@ -48,6 +48,7 @@ namespace PD::Plugin::Types
         QString Description;
         QString QmlFilePath;
         QString IconPath;
+        QVariantMap InitialProperties;
     };
 
 } // namespace PD::Plugin::Types

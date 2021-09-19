@@ -7,6 +7,7 @@ find_package(Qt6 6.2 COMPONENTS Core Gui Quick REQUIRED)
 set(INTERFACE_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginInterface.hpp
     ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/PDBaseTypes.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/include/PDPlugin/PluginBase/QObjectPropertyHelpers.hpp
 )
 
 set(FEATURE_HEADERS
