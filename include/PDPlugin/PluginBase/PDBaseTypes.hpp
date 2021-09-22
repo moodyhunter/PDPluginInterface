@@ -1,54 +1,58 @@
 #pragma once
 
 #include <QDebug>
+#include <QMap>
 #include <QString>
+#include <QVariant>
 
 // clang-format off
 #define DeclareSafeID(type)                                                                                                                                              \
 namespace PD::Plugin::Types::_safetypes{ class __##type; }                                                                                                           \
-    typedef PD::Plugin::Types::PDIdT<PD::Plugin::Types::_safetypes::__##type> type;                                                                                      \
+    typedef PD::Plugin::Types::PDId_t<PD::Plugin::Types::_safetypes::__##type> type;                                                                                      \
     Q_DECLARE_METATYPE(type)
 // clang-format on
 
 namespace PD::Plugin::Types
 {
-    // clang-format off
     template<typename T>
-    struct PDIdT
+    struct PDId_t
     {
-        PDIdT() : m_id(u"null"_qs){};
-        explicit PDIdT(const QString &id) : m_id(id){};
-        ~PDIdT() = default;
-        inline bool operator==(const PDIdT<T> &rhs) const { return m_id == rhs.m_id; }
-        inline bool operator!=(const PDIdT<T> &rhs) const { return m_id != rhs.m_id; }
+        PDId_t() : m_id(u"null"_qs){};
+        explicit PDId_t(const QString &id) : m_id(id){};
+        ~PDId_t() = default;
+        // clang-format off
+        inline bool operator==(const PDId_t<T> &rhs) const { return m_id == rhs.m_id; }
+        inline bool operator!=(const PDId_t<T> &rhs) const { return m_id != rhs.m_id; }
         inline const QString toString() const { return m_id; }
         inline bool isNull() const { return m_id == u"null"_qs; }
+        // clang-format on
 
       private:
         QString m_id;
     };
-    // clang-format on
 
     template<typename T>
-    uint qHash(const PDIdT<T> &id)
+    uint qHash(const PDId_t<T> &id)
     {
         return qHash(id.toString());
     }
 
     template<typename T>
-    QDebug operator<<(QDebug debug, const PDIdT<T> &c)
+    QDebug operator<<(QDebug debug, const PDId_t<T> &c)
     {
         QDebugStateSaver saver(debug);
         debug.nospace() << QMetaType::fromType<decltype(c)>().name() << '[' << c.toString() << ']';
         return debug;
     }
 
+    typedef QMap<QString, QPair<QString, QVariant>> PDPropertyMap;
+
     struct PDPluginQmlTypeInfo
     {
         QString Description;
         QString QmlFilePath;
         QString IconPath;
-        QVariantMap InitialProperties;
+        PDPropertyMap InitialProperties;
     };
 
 } // namespace PD::Plugin::Types
