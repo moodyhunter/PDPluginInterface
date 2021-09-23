@@ -41,22 +41,23 @@ namespace PD::Plugin::Types
     QDebug operator<<(QDebug debug, const PDId_t<T> &c)
     {
         QDebugStateSaver saver(debug);
-        debug.nospace() << QMetaType::fromType<decltype(c)>().name() << '[' << c.toString() << ']';
+        debug.nospace() << '[' << c.toString() << ']';
         return debug;
     }
 
-    typedef QMap<QString, QPair<QString, QVariant>> PDPropertyMap;
+    typedef std::tuple<QString, QString, QVariant> PDPropertyDescriptor;
 
     struct PDPluginQmlTypeInfo
     {
         QString Description;
         QString QmlFilePath;
         QString IconPath;
-        PDPropertyMap InitialProperties;
+        QList<PDPropertyDescriptor> Properties;
     };
 
 } // namespace PD::Plugin::Types
 
 DeclareSafeID(PDPluginId);
 
+Q_DECLARE_METATYPE(PD::Plugin::Types::PDPropertyDescriptor)
 Q_DECLARE_METATYPE(PD::Plugin::Types::PDPluginQmlTypeInfo)
