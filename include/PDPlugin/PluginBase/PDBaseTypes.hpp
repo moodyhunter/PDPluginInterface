@@ -2,15 +2,17 @@
 
 #include <QDebug>
 #include <QMap>
+#include <QSize>
 #include <QString>
 #include <QVariant>
 
-// clang-format off
 #define DeclareSafeID(type)                                                                                                                                              \
-namespace PD::Plugin::Types::_safetypes{ class __##type; }                                                                                                           \
-    typedef PD::Plugin::Types::PDId_t<PD::Plugin::Types::_safetypes::__##type> type;                                                                                      \
+    namespace PD::Plugin::Types::_safetypes                                                                                                                              \
+    {                                                                                                                                                                    \
+        class __##type;                                                                                                                                                  \
+    }                                                                                                                                                                    \
+    typedef PD::Plugin::Types::PDId_t<PD::Plugin::Types::_safetypes::__##type> type;                                                                                     \
     Q_DECLARE_METATYPE(type)
-// clang-format on
 
 namespace PD::Plugin::Types
 {
@@ -53,9 +55,22 @@ namespace PD::Plugin::Types
         QString QmlFilePath;
         QString IconPath;
         QList<PDPropertyDescriptor> Properties;
+        QSize initialSize;
     };
 
 } // namespace PD::Plugin::Types
+
+template<typename TObject, typename TValue>
+const inline PD::Plugin::Types::PDPropertyDescriptor makeDescriptor(const char *prop, const QString &description, const TValue &defaultValue)
+{
+    const auto pId = TObject::staticMetaObject.indexOfProperty(prop);
+    Q_ASSERT_X(pId != -1, "Invalid property name", Q_FUNC_INFO);
+
+    const auto canConvert = QMetaType::canConvert(TObject::staticMetaObject.property(pId).metaType(), QVariant::fromValue(defaultValue).metaType());
+    Q_ASSERT_X(canConvert, "Invalid default property value", Q_FUNC_INFO);
+
+    return { QString::fromUtf8(prop), description, defaultValue };
+}
 
 DeclareSafeID(PDPluginId);
 
